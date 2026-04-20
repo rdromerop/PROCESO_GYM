@@ -23,6 +23,20 @@ export interface DayRecord {
   calories: number;
 }
 
+// Interfaces para respuestas de Supabase
+interface GymRecordRow {
+  date: string;
+  completed: boolean;
+  creatine_grams: number;
+  calories: number;
+}
+
+interface WeightHistoryRow {
+  date: string;
+  weight: number;
+  loss: number;
+}
+
 export const useGymData = () => {
   const [stats, setStats] = useState<UserStats>({
     name: 'Rodrigo',
@@ -39,6 +53,10 @@ export const useGymData = () => {
   // Fetch data on mount
   useEffect(() => {
     const fetchData = async () => {
+      if (!supabase) {
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       try {
         // 1. Fetch Profile
@@ -65,7 +83,7 @@ export const useGymData = () => {
         
         if (gymRecords) {
           const recordsMap: Record<string, DayRecord> = {};
-          gymRecords.forEach(r => {
+          (gymRecords as GymRecordRow[]).forEach(r => {
             recordsMap[r.date] = {
               date: r.date,
               completed: r.completed,
@@ -83,7 +101,7 @@ export const useGymData = () => {
           .order('date', { ascending: true });
         
         if (history) {
-          setWeightHistory(history.map(h => ({
+          setWeightHistory((history as WeightHistoryRow[]).map(h => ({
             date: new Date(h.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }),
             weight: h.weight,
             loss: h.loss
@@ -102,6 +120,8 @@ export const useGymData = () => {
   const updateStats = async (newStats: Partial<UserStats>) => {
     const updated = { ...stats, ...newStats };
     setStats(updated);
+
+    if (!supabase) return;
 
     try {
       await supabase.from('profiles').upsert({
@@ -131,6 +151,8 @@ export const useGymData = () => {
 
     setWeightHistory(prev => [...prev, newRecord]);
 
+    if (!supabase) return;
+
     try {
       await supabase.from('weight_history').insert({
         date: dateStr,
@@ -158,6 +180,8 @@ export const useGymData = () => {
     
     setRecords({ ...newRecords });
 
+    if (!supabase) return;
+
     try {
       await supabase.from('gym_records').upsert({
         date: date,
@@ -183,6 +207,8 @@ export const useGymData = () => {
     
     setRecords({ ...newRecords });
 
+    if (!supabase) return;
+
     try {
       await supabase.from('gym_records').upsert({
         date: date,
@@ -202,6 +228,8 @@ export const useGymData = () => {
       ...data
     };
     setRecords({ ...newRecords });
+
+    if (!supabase) return;
 
     try {
       await supabase.from('gym_records').upsert({
