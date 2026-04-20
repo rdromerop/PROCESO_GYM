@@ -3,16 +3,16 @@
   --foreground: #ffffff;
   --card: #0c0c0e;
   --card-foreground: #ffffff;
-  --primary: #4ade80; /* Neon Futuristic Green */
-  --primary-foreground: #000000;
-  --secondary: #10b981; /* Tech Emerald */
+  --primary: #f97316; /* Orange Athletic */
+  --primary-foreground: #ffffff;
+  --secondary: #0ea5e9; /* Electric Blue */
   --secondary-foreground: #ffffff;
   --muted: #111827;
   --muted-foreground: #94a3b8;
-  --accent: #4ade80;
-  --accent-foreground: #000000;
+  --accent: #f97316;
+  --accent-foreground: #ffffff;
   --border: #1f2937;
-  --ring: #4ade80;
+  --ring: #f97316;
   --radius: 1.25rem;
 }
 

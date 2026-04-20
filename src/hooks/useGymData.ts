@@ -124,7 +124,7 @@ export const useGymData = () => {
     if (!supabase) return;
 
     try {
-      await supabase.from('profiles').upsert({
+      const { error } = await supabase.from('profiles').upsert({
         id: 1,
         name: updated.name,
         current_weight: updated.weight,
@@ -132,9 +132,13 @@ export const useGymData = () => {
         age: updated.age,
         target_weight: updated.targetWeight,
         updated_at: new Date().toISOString()
-      });
+      }, { onConflict: 'id' });
+
+      if (error) {
+        console.error('Error upserting stats:', error);
+      }
     } catch (error) {
-      console.error('Error updating stats in Supabase:', error);
+      console.error('Unexpected error updating stats in Supabase:', error);
     }
   };
 
@@ -154,16 +158,20 @@ export const useGymData = () => {
     if (!supabase) return;
 
     try {
-      await supabase.from('weight_history').insert({
+      const { error: historyError } = await supabase.from('weight_history').insert({
         date: dateStr,
         weight: newWeight,
         loss: Number(loss.toFixed(1))
       });
+
+      if (historyError) {
+        console.error('Error adding weight history:', historyError);
+      }
       
       // Also update current weight in stats
       await updateStats({ weight: newWeight });
     } catch (error) {
-      console.error('Error adding weight record to Supabase:', error);
+      console.error('Unexpected error adding weight record to Supabase:', error);
     }
   };
 

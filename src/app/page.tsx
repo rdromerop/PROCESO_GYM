@@ -12,9 +12,14 @@ export default function Dashboard() {
   const [isEditingWeight, setIsEditingWeight] = React.useState(false);
   const [newWeight, setNewWeight] = React.useState(stats.weight);
 
-  const handleWeightSubmit = (e: React.FormEvent) => {
+  // Sincronizar estado local cuando stats se carga desde Supabase
+  React.useEffect(() => {
+    setNewWeight(stats.weight);
+  }, [stats.weight]);
+
+  const handleWeightSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    addWeightRecord(newWeight);
+    await addWeightRecord(newWeight);
     setIsEditingWeight(false);
   };
 

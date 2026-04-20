@@ -43,7 +43,7 @@ export const WeeklyTracker = ({ records, onToggle, onToggleCreatine, streak }: W
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
           Asistencia & <span className="text-secondary">Creatina</span>
         </h2>
-        <div className="glass px-4 py-2 rounded-xl flex items-center gap-2 border-primary/20 bg-primary/5">
+        <div className="glass px-4 py-2 rounded-xl flex items-center gap-2 border-primary/20 bg-primary/5 shadow-[0_0_15px_-5px_var(--primary)]">
           <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Racha Actual</span>
           <span className="text-xl font-bold text-primary">{streak} 🔥</span>
         </div>

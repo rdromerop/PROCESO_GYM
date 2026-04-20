@@ -33,7 +33,7 @@ export const Sidebar = () => {
           overflow: 'hidden',
           background: '#0c0c0e',
           border: '1px solid var(--border)',
-          boxShadow: '0 8px 30px -5px rgba(74, 222, 128, 0.2)'
+          boxShadow: '0 8px 30px -5px rgba(249, 115, 22, 0.2)'
         }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
@@ -47,7 +47,7 @@ export const Sidebar = () => {
           />
         </div>
         <span className="font-bold tracking-tight text-2xl flex items-baseline gap-1" style={{ letterSpacing: '-0.02em' }}>
-          <span style={{ color: '#15803d' }}>DR</span>
+          <span style={{ color: '#f97316' }}>DR</span>
           <span className="text-white">GYMPRO</span>
         </span>
       </div>
