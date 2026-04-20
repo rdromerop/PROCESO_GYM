@@ -41,11 +41,11 @@ export const WeeklyTracker = ({ records, onToggle, onToggleCreatine, streak }: W
     <div className="flex flex-col gap-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
-          Asistencia & <span className="text-secondary">Creatina</span>
+          Asistencia & <span className="text-primary">Creatina</span>
         </h2>
-        <div className="glass px-4 py-2 rounded-xl flex items-center gap-2 border-primary/20 bg-primary/5 shadow-[0_0_15px_-5px_var(--primary)]">
+        <div className="glass px-4 py-2 rounded-xl flex items-center gap-2 border-secondary/20 bg-secondary/5 shadow-[0_0_15px_-5px_var(--secondary)]">
           <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Racha Actual</span>
-          <span className="text-xl font-bold text-primary">{streak} 🔥</span>
+          <span className="text-xl font-bold text-secondary">{streak} 🔥</span>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export const WeeklyTracker = ({ records, onToggle, onToggleCreatine, streak }: W
                       key={dateStr} 
                       className="flex flex-col items-center gap-2 transition-all"
                     >
-                      <span className={`text-xs font-bold ${isToday ? 'text-primary' : 'text-zinc-500'}`}>
+                      <span className={`text-xs font-bold ${isToday ? 'text-secondary' : 'text-zinc-500'}`}>
                         {dayLabels[dIdx]}
                       </span>
                       
@@ -80,9 +80,9 @@ export const WeeklyTracker = ({ records, onToggle, onToggleCreatine, streak }: W
                         onClick={() => onToggle(dateStr)}
                         className={`w-12 h-12 rounded-2xl flex items-center justify-center border-2 transition-all ${
                           isCompleted 
-                            ? 'bg-primary border-primary text-white shadow-[0_0_15px_-3px_rgba(249,115,22,0.5)]' 
+                            ? 'bg-secondary border-secondary text-white shadow-[0_0_15px_-3px_rgba(14,165,223,0.5)]' 
                             : 'border-zinc-800 text-zinc-800 hover:border-zinc-700'
-                        } ${isToday && !isCompleted ? 'border-primary/50' : ''}`}
+                        } ${isToday && !isCompleted ? 'border-secondary/50' : ''}`}
                       >
                         {isCompleted ? <CheckCircle2 size={24} /> : <Circle size={20} />}
                       </button>
@@ -92,7 +92,7 @@ export const WeeklyTracker = ({ records, onToggle, onToggleCreatine, streak }: W
                         onClick={() => onToggleCreatine(dateStr)}
                         className={`w-8 h-8 rounded-lg flex items-center justify-center border transition-all ${
                           hasCreatine 
-                            ? 'bg-secondary/20 border-secondary text-secondary' 
+                            ? 'bg-primary/20 border-primary text-primary' 
                             : 'border-zinc-800 text-zinc-800 hover:border-zinc-700'
                         }`}
                         title="Creatina 5g"

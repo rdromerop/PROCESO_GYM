@@ -10,7 +10,7 @@ interface ProgressChartsProps {
 export const ProgressCharts = ({ data }: ProgressChartsProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
-      <GlassCard title="Pérdida de Peso (kg)" className="card-orange">
+      <GlassCard title="Pérdida de Peso (kg)" className="card-blue">
         <div style={{ height: '300px', width: '100%', marginTop: '1rem' }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
@@ -36,9 +36,9 @@ export const ProgressCharts = ({ data }: ProgressChartsProps) => {
               <Line 
                 type="monotone" 
                 dataKey="weight" 
-                stroke="var(--primary)" 
+                stroke="var(--secondary)" 
                 strokeWidth={3} 
-                dot={{ fill: 'var(--primary)', r: 4, strokeWidth: 2, stroke: '#000' }}
+                dot={{ fill: 'var(--secondary)', r: 4, strokeWidth: 2, stroke: '#000' }}
                 activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2 }}
                 animationDuration={1500}
               />
@@ -47,14 +47,14 @@ export const ProgressCharts = ({ data }: ProgressChartsProps) => {
         </div>
       </GlassCard>
 
-      <GlassCard title="Consumo de Creatina (g)" className="card-blue">
+      <GlassCard title="Consumo de Creatina (g)" className="card-orange">
         <div style={{ height: '300px', width: '100%', marginTop: '1rem' }}>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data}>
               <defs>
-                <linearGradient id="colorBlue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--secondary)" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="var(--secondary)" stopOpacity={0}/>
+                <linearGradient id="colorOrange" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="var(--primary)" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
@@ -77,9 +77,9 @@ export const ProgressCharts = ({ data }: ProgressChartsProps) => {
               <Area 
                 type="monotone" 
                 dataKey="creatine" 
-                stroke="var(--secondary)" 
+                stroke="var(--primary)" 
                 fillOpacity={1}
-                fill="url(#colorBlue)" 
+                fill="url(#colorOrange)" 
                 strokeWidth={3}
                 animationDuration={2000}
               />
