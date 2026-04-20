@@ -2,7 +2,7 @@ import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
 
 export const metadata = {
-  title: 'Gym Tracker - Rodrigo',
+  title: 'DR GYMPRO - Rodrigo',
   description: 'Dashboard de progreso personal de gimnasio',
 };
 
@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="es">
       <body className="grid-bg">
         <Sidebar />
-        <div style={{ marginLeft: '260px' }}>
+        <div style={{ marginLeft: '300px' }}>
           {children}
         </div>
       </body>

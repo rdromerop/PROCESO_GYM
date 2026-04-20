@@ -8,24 +8,34 @@ import { useGymData } from '@/hooks/useGymData';
 import { Weight, Ruler, User as UserIcon, Target } from 'lucide-react';
 
 export default function Dashboard() {
-  const { stats, records, toggleDay, streak } = useGymData();
+  const { stats, records, weightHistory, toggleDay, toggleCreatine, addWeightRecord, streak } = useGymData();
+  const [isEditingWeight, setIsEditingWeight] = React.useState(false);
+  const [newWeight, setNewWeight] = React.useState(stats.weight);
 
-  // Mock data for charts if records are empty
-  const chartData = [
-    { date: '14 Abr', weight: 112, creatine: 5 },
-    { date: '15 Abr', weight: 111.5, creatine: 5 },
-    { date: '16 Abr', weight: 111.2, creatine: 0 },
-    { date: '17 Abr', weight: 110.8, creatine: 5 },
-    { date: '18 Abr', weight: 110.5, creatine: 5 },
-    { date: '19 Abr', weight: 110.2, creatine: 5 },
-    { date: '20 Abr', weight: stats.weight, creatine: 5 },
-  ];
+  const handleWeightSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addWeightRecord(newWeight);
+    setIsEditingWeight(false);
+  };
+
+  // Map history to chart format
+  const chartData = weightHistory.length > 0 
+    ? weightHistory.map(h => ({ ...h, creatine: 5 })) // Just for viz
+    : [{ date: 'Hoy', weight: stats.weight, creatine: 5 }];
+
+  const lastWeightLoss = weightHistory[weightHistory.length - 1]?.loss || 0;
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col gap-8 animate-fade-in">
       <header className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold text-white">¡Hola, {stats.name}!</h1>
-        <p className="text-zinc-500">Aquí está el resumen de tu proceso para hoy.</p>
+        <h1 className="text-3xl font-bold text-white uppercase tracking-tight">
+          ¡Hola, <span className="text-primary">{stats.name}</span>!
+        </h1>
+        <p className="text-zinc-500">
+          {lastWeightLoss > 0 
+            ? `🔥 ¡Excelente! Bajaste ${lastWeightLoss} kg respecto al lunes anterior.` 
+            : 'Tu proceso diario bajo control.'}
+        </p>
       </header>
 
       {/* Stats Overview */}
@@ -34,26 +44,32 @@ export default function Dashboard() {
           label="Peso Actual" 
           value={stats.weight} 
           unit="kg" 
-          icon={<Weight size={18} />} 
+          action={
+            isEditingWeight ? (
+              <form onSubmit={handleWeightSubmit} className="flex gap-2">
+                <input 
+                  type="number" 
+                  autoFocus
+                  className="w-20 p-1 text-sm rounded bg-zinc-800 border-zinc-700"
+                  value={newWeight}
+                  onChange={(e) => setNewWeight(Number(e.target.value))}
+                />
+                <button type="submit" className="text-xs bg-primary text-white px-2 rounded font-bold">OK</button>
+              </form>
+            ) : (
+              <button 
+                onClick={() => setIsEditingWeight(true)}
+                className="text-xs bg-zinc-800 text-zinc-400 hover:text-white px-2 py-1 rounded transition-colors"
+                style={{ border: '1px solid var(--border)' }}
+              >
+                Editar
+              </button>
+            )
+          }
         />
-        <StatCard 
-          label="Altura" 
-          value={stats.height} 
-          unit="m" 
-          icon={<Ruler size={18} />} 
-        />
-        <StatCard 
-          label="Edad" 
-          value={stats.age} 
-          unit="años" 
-          icon={<UserIcon size={18} />} 
-        />
-        <StatCard 
-          label="Meta" 
-          value={stats.targetWeight} 
-          unit="kg" 
-          icon={<Target size={18} />} 
-        />
+        <StatCard label="Altura" value={stats.height} unit="m" icon={<Ruler size={18} />} />
+        <StatCard label="Edad" value={stats.age} unit="años" icon={<UserIcon size={18} />} />
+        <StatCard label="Meta" value={stats.targetWeight} unit="kg" icon={<Target size={18} color="var(--primary)" />} />
       </section>
 
       {/* Main Content Grid */}
@@ -62,6 +78,7 @@ export default function Dashboard() {
           <WeeklyTracker 
             records={records} 
             onToggle={toggleDay} 
+            onToggleCreatine={toggleCreatine}
             streak={streak} 
           />
           <ProgressCharts data={chartData} />

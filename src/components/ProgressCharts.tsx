@@ -9,8 +9,8 @@ interface ProgressChartsProps {
 
 export const ProgressCharts = ({ data }: ProgressChartsProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <GlassCard title="Pérdida de Peso (kg)">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
+      <GlassCard title="Pérdida de Peso (kg)" className="card-orange">
         <div style={{ height: '300px', width: '100%', marginTop: '1rem' }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
@@ -30,26 +30,33 @@ export const ProgressCharts = ({ data }: ProgressChartsProps) => {
                 domain={['dataMin - 5', 'dataMax + 5']}
               />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#141414', border: '1px solid #27272a', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: '#121214', border: '1px solid #27272a', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.4)' }}
                 itemStyle={{ color: '#fff' }}
               />
               <Line 
                 type="monotone" 
                 dataKey="weight" 
-                stroke="#ffffff" 
-                strokeWidth={2} 
-                dot={{ fill: '#ffffff', r: 4 }}
-                activeDot={{ r: 6, stroke: '#141414', strokeWidth: 2 }}
+                stroke="var(--primary)" 
+                strokeWidth={3} 
+                dot={{ fill: 'var(--primary)', r: 4, strokeWidth: 2, stroke: '#000' }}
+                activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2 }}
+                animationDuration={1500}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </GlassCard>
 
-      <GlassCard title="Consumo de Creatina (g)">
+      <GlassCard title="Consumo de Creatina (g)" className="card-blue">
         <div style={{ height: '300px', width: '100%', marginTop: '1rem' }}>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data}>
+              <defs>
+                <linearGradient id="colorBlue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--secondary)" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="var(--secondary)" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
               <XAxis 
                 dataKey="date" 
@@ -65,14 +72,16 @@ export const ProgressCharts = ({ data }: ProgressChartsProps) => {
                 axisLine={false}
               />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#141414', border: '1px solid #27272a', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: '#121214', border: '1px solid #27272a', borderRadius: '12px' }}
               />
               <Area 
                 type="monotone" 
                 dataKey="creatine" 
-                stroke="#a1a1aa" 
-                fill="#27272a" 
-                strokeWidth={2}
+                stroke="var(--secondary)" 
+                fillOpacity={1}
+                fill="url(#colorBlue)" 
+                strokeWidth={3}
+                animationDuration={2000}
               />
             </AreaChart>
           </ResponsiveContainer>
