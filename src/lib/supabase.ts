@@ -14,5 +14,5 @@ export const supabase = (supabaseUrl && supabaseAnonKey)
   : null as any; 
 
 if (!supabase && typeof window !== 'undefined') {
-  alert('ERROR: Supabase no se pudo inicializar. Verifica tus variables en Vercel.');
+  console.warn('Supabase no se pudo inicializar. Verifica tus variables en Vercel.');
 }

@@ -2,14 +2,17 @@
 import React from 'react';
 import { Home, Calendar, Utensils, User, Settings, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export const Sidebar = () => {
+  const pathname = usePathname();
+
   const menuItems = [
-    { icon: <Home size={22} />, label: 'Dashboard', href: '/' },
-    { icon: <Calendar size={22} />, label: 'Asistencia', href: '/asistencia' },
-    { icon: <Utensils size={22} />, label: 'Dieta', href: '/dieta' },
-    { icon: <TrendingUp size={22} />, label: 'Progreso', href: '/progreso' },
-    { icon: <User size={22} />, label: 'Perfil', href: '/perfil' },
+    { icon: <Home size={26} />, label: 'Dashboard', href: '/' },
+    { icon: <Calendar size={26} />, label: 'Asistencia', href: '/asistencia' },
+    { icon: <Utensils size={26} />, label: 'Dieta', href: '/dieta' },
+    { icon: <TrendingUp size={26} />, label: 'Progreso', href: '/progreso' },
+    { icon: <User size={26} />, label: 'Perfil', href: '/perfil' },
   ];
 
   return (
@@ -52,30 +55,39 @@ export const Sidebar = () => {
         </span>
       </div>
 
-      <nav className="flex flex-col gap-2">
-        {menuItems.map((item) => (
-          <Link 
-            key={item.href} 
-            href={item.href}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm border border-transparent hover:border-zinc-800"
-            style={{ textDecoration: 'none' }}
-          >
-            <span className="icon-container">{item.icon}</span>
-            {item.label}
-          </Link>
-        ))}
+      <nav className="flex flex-col gap-3">
+        {menuItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link 
+              key={item.href} 
+              href={item.href}
+              className={`flex items-center gap-5 px-6 py-4 rounded-2xl transition-all font-bold text-lg border ${
+                isActive 
+                  ? 'bg-primary/10 border-primary/30 text-white shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]' 
+                  : 'text-zinc-500 hover:text-white hover:bg-zinc-900/50 border-transparent hover:border-zinc-800'
+              }`}
+              style={{ textDecoration: 'none' }}
+            >
+              <span className={`transition-transform duration-300 ${isActive ? 'scale-110 text-primary' : 'text-zinc-600'}`}>
+                {item.icon}
+              </span>
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
 
       <div className="flex-1"></div>
 
-      <div className="flex flex-col gap-2 mt-auto">
+      <div className="flex flex-col mt-auto pt-4 border-t border-zinc-800/50">
         <Link 
           href="/settings"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white transition-all font-medium text-sm"
+          className="flex items-center gap-4 px-6 py-3 rounded-xl text-zinc-500 hover:text-white hover:bg-zinc-900/50 transition-all font-bold text-sm border border-transparent hover:border-zinc-800"
           style={{ textDecoration: 'none' }}
         >
           <Settings size={20} />
-          Ajustes
+          Ajustes del Sistema
         </Link>
       </div>
     </aside>

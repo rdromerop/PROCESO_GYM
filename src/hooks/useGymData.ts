@@ -109,9 +109,6 @@ export const useGymData = () => {
         }
       } catch (error: any) {
         console.error('Error fetching data from Supabase:', error);
-        if (typeof window !== 'undefined') {
-          alert('Error al cargar perfil: ' + (error?.message || 'Error desconocido'));
-        }
       } finally {
         setLoading(false);
       }
@@ -139,11 +136,9 @@ export const useGymData = () => {
 
       if (error) {
         console.error('Error upserting stats:', error);
-        alert('Error al guardar peso: ' + error.message + '\nDetalle: ' + error.details);
       }
     } catch (error: any) {
       console.error('Unexpected error updating stats in Supabase:', error);
-      alert('Error inesperado al guardar: ' + error.message);
     }
   };
 
